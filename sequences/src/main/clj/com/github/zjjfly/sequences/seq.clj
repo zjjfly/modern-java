@@ -1,12 +1,10 @@
-(ns jjzi.sequences.seq
+(ns com.github.zjjfly.sequences.seq
   (:require [clojure.java.jdbc :as jdbc]
-            [clojure.edn :as edn]))
+            [com.github.zjjfly.sequences.config :as config]
+            [taoensso.nippy :as nippy]))
 
 (def db-spec
-  {:dbtype   "postgresql"
-   :dbname   "sequences"
-   :user     "jjzi"
-   :password "123456"})
+  (config/db-spec))
 
 (defn create-seq
   [^String seq-name]
@@ -20,12 +18,14 @@
 (defn next-val
   [seq-name]
   (->
-    (jdbc/query db-spec ["select nextval(?)" seq-name])
-    first
-    (:nextval)))
+   (jdbc/query db-spec ["select nextval(?)" seq-name])
+   first
+   (:nextval)))
 
 (defn drop-seq
   [seq-name]
   (jdbc/execute! db-spec (str "drop sequence " seq-name)))
+
+(nippy/thaw (nippy/freeze [1 2 3]))
 
 ;(create-seq "orders")

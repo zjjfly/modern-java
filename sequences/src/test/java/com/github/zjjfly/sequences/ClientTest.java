@@ -1,20 +1,21 @@
-package jjzi.sequences;
+package com.github.zjjfly.sequences;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
 import akka.testkit.javadsl.TestKit;
+import com.github.zjjfly.messages.CreateSequence;
+import com.github.zjjfly.messages.DropSequence;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import java.time.Duration;
-import java.util.concurrent.atomic.AtomicLong;
-import jjzi.messages.CreateSequences;
-import jjzi.messages.DropSequence;
-import jjzi.messages.NextValue;
+import com.github.zjjfly.messages.NextValue;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.time.Duration;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author z00405ze
@@ -27,9 +28,10 @@ public class ClientTest {
 
     @BeforeClass
     public static void setup() throws InterruptedException {
-        system = ActorSystem.create("test");
+        Config config = ConfigFactory.load();
+        system = ActorSystem.create("test",config);
         server = system.actorOf(SequencesActor.props(), "sequences");
-        CreateSequences message = new CreateSequences();
+        CreateSequence message = new CreateSequence();
         message.setName("test");
         server.tell(message, server);
         Thread.sleep(1000);

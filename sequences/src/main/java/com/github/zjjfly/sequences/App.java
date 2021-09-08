@@ -1,4 +1,4 @@
-package jjzi.sequences;
+package com.github.zjjfly.sequences;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
@@ -7,7 +7,7 @@ import akka.actor.Props;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.pf.ReceiveBuilder;
-import jjzi.messages.NextValue;
+import com.github.zjjfly.messages.NextValue;
 
 /**
  * @author z00405ze

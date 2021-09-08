@@ -1,21 +1,21 @@
-package jjzi.sequences;
+package com.github.zjjfly.sequences;
 
 import akka.actor.AbstractActor;
 import akka.actor.Props;
 import akka.japi.pf.ReceiveBuilder;
 import clojure.lang.IFn;
+import com.github.zjjfly.messages.CreateSequence;
+import com.github.zjjfly.messages.DropSequence;
+import com.github.zjjfly.messages.ListSequences;
+import com.github.zjjfly.messages.NextValue;
 import jaskell.util.CR;
-import jjzi.messages.CreateSequences;
-import jjzi.messages.DropSequence;
-import jjzi.messages.ListSequences;
-import jjzi.messages.NextValue;
 
 /**
  * @author z00405ze
  */
 public class SequencesActor extends AbstractActor {
 
-    private final static String seqNameSpace = "jjzi.sequences.seq";
+    private final static String seqNameSpace = "com.github.zjjfly.sequences.seq";
 
     private static IFn creator;
 
@@ -41,7 +41,7 @@ public class SequencesActor extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        return ReceiveBuilder.create().match(CreateSequences.class, msg -> {
+        return ReceiveBuilder.create().match(CreateSequence.class, msg -> {
             sender().tell(creator.invoke(msg.getName()), self());
         }).match(NextValue.class, msg -> {
             sender().tell(nextVal.invoke(msg.getName()), self());

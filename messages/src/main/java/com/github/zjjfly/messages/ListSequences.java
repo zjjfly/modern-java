@@ -1,4 +1,4 @@
-package jjzi.messages;
+package com.github.zjjfly.messages;
 
 /**
  * @author z00405ze
